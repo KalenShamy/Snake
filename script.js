@@ -136,8 +136,6 @@ window.onresize = (event) => {
 window.addEventListener("keydown", function (event) {
   if (event.defaultPrevented || (gameRun == false && event.key != "r" && event.key != "R")) {
     return; // Do nothing if the event was already processed
-  } else {
-    console.log(event.key, nextMove);
   }
   switch (event.key) {
     case "ArrowUp":
