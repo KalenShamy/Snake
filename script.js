@@ -4,7 +4,7 @@ var apple = [0,0];
 var snake = [[3,4],[2,4],[1,4]];
 var direction = "Right";
 
-var pendingMove = false;
+var nextMove = "";
 var gameRun = true;
 
 var ateApple = false;
@@ -122,7 +122,10 @@ function step() {
       ateApple = true;
       score += 1;
     }
-    pendingMove = false;
+    if (nextMove != "") {
+      direction = nextMove;
+      nextMove = "";
+    }
   }
 }
 
@@ -131,40 +134,58 @@ window.onresize = (event) => {
 };
 
 window.addEventListener("keydown", function (event) {
-  if (event.defaultPrevented || ((pendingMove == true || gameRun == false) && event.key != "r" && event.key != "R")) {
+  if (event.defaultPrevented || (gameRun == false && event.key != "r" && event.key != "R")) {
     return; // Do nothing if the event was already processed
+  } else {
+    console.log(event.key, nextMove);
   }
   switch (event.key) {
     case "ArrowUp":
     case "w":
     case "W":
       if (direction == "Right" || direction == "Left") {
-        direction = "Up";
-        pendingMove = true;
+        if (nextMove == "") {
+          direction = "Up";
+          nextMove = "Up";
+        } else {
+          nextMove = "Up";
+        }
       }
       break;
     case "ArrowLeft":
     case "a":
     case "A":
       if (direction == "Up" || direction == "Down") {
-        direction = "Left";
-        pendingMove = true;
+        if (nextMove == "") {
+          direction = "Left";
+          nextMove = "Left";
+        } else {
+          nextMove = "Left";
+        }
       }
       break;
     case "ArrowRight":
     case "d":
     case "D":
       if (direction == "Up" || direction == "Down") {
-        direction = "Right";
-        pendingMove = true;
+        if (nextMove == "") {
+          direction = "Right";
+          nextMove = "Right";
+        } else {
+          nextMove = "Right";
+        }
       }
       break;
     case "ArrowDown":
     case "s":
     case "S":
       if (direction == "Right" || direction == "Left") {
-        direction = "Down";
-        pendingMove = true;
+        if (nextMove == "") {
+          direction = "Down";
+          nextMove = "Down";
+        } else {
+          nextMove = "Down";
+        }
       }
       break;
     case "r":
