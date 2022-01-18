@@ -131,7 +131,7 @@ window.onresize = (event) => {
 };
 
 window.addEventListener("keydown", function (event) {
-  if (event.defaultPrevented || pendingMove == true || gameRun == false) {
+  if (event.defaultPrevented || ((pendingMove == true || gameRun == false) && event.key != "r" && event.key != "R")) {
     return; // Do nothing if the event was already processed
   }
   switch (event.key) {
