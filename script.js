@@ -1,3 +1,5 @@
+/* Created by Kalen Shamy */
+
 var apple = [0,0];
 var snake = [[3,4],[2,4],[1,4]];
 var direction = "Right";
