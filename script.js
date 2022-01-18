@@ -133,7 +133,7 @@ window.onresize = (event) => {
   updateSize();
 };
 
-window.addEventListener("keydown", function (event) {
+function keypress(event) {
   if (event.defaultPrevented || (gameRun == false && event.key != "r" && event.key != "R")) {
     return; // Do nothing if the event was already processed
   }
@@ -193,7 +193,17 @@ window.addEventListener("keydown", function (event) {
 
   // Cancel the default action to avoid it being handled twice
   event.preventDefault();
-}, true);
+}
+
+function controlsVisible() {
+  document.getElementById("controlsButton").style.display = "none";
+  for (var i = 0; i < document.getElementsByTagName("span").length; i++) {
+    document.getElementsByTagName("span")[i].style.display = "flex";
+    document.getElementsByTagName("span")[i].style.justifyContent = "center";
+  }
+}
+
+window.addEventListener("keydown", keypress, true);
 
 updateSize();
 updateChecker();
@@ -206,9 +216,8 @@ function sleep(milliseconds) {
 }
 async function play() {
   while (gameRun) {
+    document.getElementById("playGame").style.display = "none";
     await sleep(300);
     step();
   }
 }
-
-play();

@@ -24,7 +24,24 @@ body {
   justify-content: space-evenly;
 }
 
+#playGame {
+  background: rgb(25,125,25);
+  padding: 5px;
+  width: 10em;
+  margin: 25px auto;
+}
+
 #copywrite {
   margin-top: 25px;
   color: rgb(175,175,175)
+}
+
+#controls {
+  margin-top: 25px;
+  font-size: 25px;
+  line-height: 1.5em;
+}
+
+#controls span {
+  display: none;
 }

@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <title>Snake</title>
     <link rel="stylesheet" href="master.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
     <h1>Snake</h1>
@@ -138,6 +139,17 @@
         <div class="square" id="9_8"></div>
         <div class="square" id="9_9"></div>
       </div>
+    </div>
+    <div onclick="play()" id="playGame">Play</div>
+    <div id="controls" style="display: flex;flex-direction: column;">
+      <p onclick="controlsVisible()" id="controlsButton">Controls</p>
+      <span onclick="keypress({key:'w', defaultPrevented: false, preventDefault: function() {}})">⬆️</span>
+      <span>
+        <span onclick="keypress({key:'a', defaultPrevented: false, preventDefault: function() {}})">⬅️</span>
+        <span onclick="window.location = 'https://kalenshamy.github.io/Snake/'">🔁</span>
+        <span onclick="keypress({key:'d', defaultPrevented: false, preventDefault: function() {}})">➡️</span>
+      </span>
+      <span onclick="keypress({key:'s', defaultPrevented: false, preventDefault: function() {}})">⬇️</span>
     </div>
     <script src="script.js"></script>
     <footer>
