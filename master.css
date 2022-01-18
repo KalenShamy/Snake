@@ -23,3 +23,8 @@ body {
   flex-direction: column;
   justify-content: space-evenly;
 }
+
+#copywrite {
+  margin-top: 25px;
+  color: rgb(175,175,175)
+}
