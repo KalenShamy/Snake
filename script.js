@@ -131,14 +131,14 @@ window.onresize = (event) => {
 };
 
 window.addEventListener("keydown", function (event) {
-  if (event.defaultPrevented) {
+  if (event.defaultPrevented || pendingMove == true || gameRun == false) {
     return; // Do nothing if the event was already processed
   }
   switch (event.key) {
     case "ArrowUp":
     case "w":
     case "W":
-      if (pendingMove == false && (direction == "Right" || direction == "Left")) {
+      if (direction == "Right" || direction == "Left") {
         direction = "Up";
         pendingMove = true;
       }
@@ -146,7 +146,7 @@ window.addEventListener("keydown", function (event) {
     case "ArrowLeft":
     case "a":
     case "A":
-      if (pendingMove == false && (direction == "Up" || direction == "Down")) {
+      if (direction == "Up" || direction == "Down") {
         direction = "Left";
         pendingMove = true;
       }
@@ -154,7 +154,7 @@ window.addEventListener("keydown", function (event) {
     case "ArrowRight":
     case "d":
     case "D":
-      if (pendingMove == false && (direction == "Up" || direction == "Down")) {
+      if (direction == "Up" || direction == "Down") {
         direction = "Right";
         pendingMove = true;
       }
@@ -162,11 +162,14 @@ window.addEventListener("keydown", function (event) {
     case "ArrowDown":
     case "s":
     case "S":
-      if (pendingMove == false && (direction == "Right" || direction == "Left")) {
+      if (direction == "Right" || direction == "Left") {
         direction = "Down";
         pendingMove = true;
       }
       break;
+    case "r":
+    case "R":
+      window.location = "https://kalenshamy.github.io/Snake/";
   }
 
   // Cancel the default action to avoid it being handled twice
