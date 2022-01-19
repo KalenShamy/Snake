@@ -69,6 +69,7 @@ function updateSize() {
 }
 
 function newApple() {
+  if (snake.length == 100) return;
   apple = [randomNumber(0,9), randomNumber(0,9)];
   while (appleInSnake()) {
     apple = [randomNumber(0,9), randomNumber(0,9)];
