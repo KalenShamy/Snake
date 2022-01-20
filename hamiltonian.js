@@ -105,20 +105,41 @@ function step() {
   for (var i = 0; i < hamiltonianCycle.length; i++) {
     var square = hamiltonianCycle[i];
     if (isNextSquare == true) {
-      isNextSquare = false;
-      if (ateApple) {
-        snake.reverse();
-        snake[snake.length] = square;
-        snake.reverse();
-        newApple();
-        ateApple = false;
+      if (square[1] == 9 && square[0]%2==0 && square[0] > 2 && apple[0] < square[0]-1 && apple[0] < square[0] && snake.length < 50) {
+        isNextSquare = false;
+        if (ateApple) {
+          snake.pop();
+          snake.reverse();
+          snake[snake.length] = [square[0],9];
+          snake[snake.length] = [square[0]-1,9];
+          snake.reverse();
+          newApple();
+          ateApple = false;
+        } else {
+          snake.pop();
+          snake.pop();
+          snake.reverse();
+          snake[snake.length] = [square[0],9];
+          snake[snake.length] = [square[0]-1,9];
+          snake.reverse();
+        }
+        break;
       } else {
-        snake.pop();
-        snake.reverse();
-        snake[snake.length] = square;
-        snake.reverse();
+        isNextSquare = false;
+        if (ateApple) {
+          snake.reverse();
+          snake[snake.length] = square;
+          snake.reverse();
+          newApple();
+          ateApple = false;
+        } else {
+          snake.pop();
+          snake.reverse();
+          snake[snake.length] = square;
+          snake.reverse();
+        }
+        break;
       }
-      break;
     }
     if (square[0] == snake[0][0] && square[1] == snake[0][1]) {
       isNextSquare = true;
