@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<!-- Created By Kalen Shamy -->
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Snake</title>
+    <link rel="stylesheet" href="master.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <h1>Snake</h1>
+    <div id="snake">
+      <div id="gameOver">
+        <h1>Game Over!</h1>
+        <div style="display:flex; justify-content:space-evenly;">
+          <h1 id="snakeLength">Length: 0</h1>
+          <h1 id="score">Score: 0</h1>
+        </div>
+      </div>
+      <div class="row" id="0">
+        <div class="square" id="0_0"></div>
+        <div class="square" id="0_1"></div>
+        <div class="square" id="0_2"></div>
+        <div class="square" id="0_3"></div>
+        <div class="square" id="0_4"></div>
+        <div class="square" id="0_5"></div>
+        <div class="square" id="0_6"></div>
+        <div class="square" id="0_7"></div>
+        <div class="square" id="0_8"></div>
+        <div class="square" id="0_9"></div>
+      </div>
+      <div class="row" id="1">
+        <div class="square" id="1_0"></div>
+        <div class="square" id="1_1"></div>
+        <div class="square" id="1_2"></div>
+        <div class="square" id="1_3"></div>
+        <div class="square" id="1_4"></div>
+        <div class="square" id="1_5"></div>
+        <div class="square" id="1_6"></div>
+        <div class="square" id="1_7"></div>
+        <div class="square" id="1_8"></div>
+        <div class="square" id="1_9"></div>
+      </div>
+      <div class="row" id="2">
+        <div class="square" id="2_0"></div>
+        <div class="square" id="2_1"></div>
+        <div class="square" id="2_2"></div>
+        <div class="square" id="2_3"></div>
+        <div class="square" id="2_4"></div>
+        <div class="square" id="2_5"></div>
+        <div class="square" id="2_6"></div>
+        <div class="square" id="2_7"></div>
+        <div class="square" id="2_8"></div>
+        <div class="square" id="2_9"></div>
+      </div>
+      <div class="row" id="3">
+        <div class="square" id="3_0"></div>
+        <div class="square" id="3_1"></div>
+        <div class="square" id="3_2"></div>
+        <div class="square" id="3_3"></div>
+        <div class="square" id="3_4"></div>
+        <div class="square" id="3_5"></div>
+        <div class="square" id="3_6"></div>
+        <div class="square" id="3_7"></div>
+        <div class="square" id="3_8"></div>
+        <div class="square" id="3_9"></div>
+      </div>
+      <div class="row" id="4">
+        <div class="square" id="4_0"></div>
+        <div class="square" id="4_1"></div>
+        <div class="square" id="4_2"></div>
+        <div class="square" id="4_3"></div>
+        <div class="square" id="4_4"></div>
+        <div class="square" id="4_5"></div>
+        <div class="square" id="4_6"></div>
+        <div class="square" id="4_7"></div>
+        <div class="square" id="4_8"></div>
+        <div class="square" id="4_9"></div>
+      </div>
+      <div class="row" id="5">
+        <div class="square" id="5_0"></div>
+        <div class="square" id="5_1"></div>
+        <div class="square" id="5_2"></div>
+        <div class="square" id="5_3"></div>
+        <div class="square" id="5_4"></div>
+        <div class="square" id="5_5"></div>
+        <div class="square" id="5_6"></div>
+        <div class="square" id="5_7"></div>
+        <div class="square" id="5_8"></div>
+        <div class="square" id="5_9"></div>
+      </div>
+      <div class="row" id="6">
+        <div class="square" id="6_0"></div>
+        <div class="square" id="6_1"></div>
+        <div class="square" id="6_2"></div>
+        <div class="square" id="6_3"></div>
+        <div class="square" id="6_4"></div>
+        <div class="square" id="6_5"></div>
+        <div class="square" id="6_6"></div>
+        <div class="square" id="6_7"></div>
+        <div class="square" id="6_8"></div>
+        <div class="square" id="6_9"></div>
+      </div>
+      <div class="row" id="7">
+        <div class="square" id="7_0"></div>
+        <div class="square" id="7_1"></div>
+        <div class="square" id="7_2"></div>
+        <div class="square" id="7_3"></div>
+        <div class="square" id="7_4"></div>
+        <div class="square" id="7_5"></div>
+        <div class="square" id="7_6"></div>
+        <div class="square" id="7_7"></div>
+        <div class="square" id="7_8"></div>
+        <div class="square" id="7_9"></div>
+      </div>
+      <div class="row" id="8">
+        <div class="square" id="8_0"></div>
+        <div class="square" id="8_1"></div>
+        <div class="square" id="8_2"></div>
+        <div class="square" id="8_3"></div>
+        <div class="square" id="8_4"></div>
+        <div class="square" id="8_5"></div>
+        <div class="square" id="8_6"></div>
+        <div class="square" id="8_7"></div>
+        <div class="square" id="8_8"></div>
+        <div class="square" id="8_9"></div>
+      </div>
+      <div class="row" id="9">
+        <div class="square" id="9_0"></div>
+        <div class="square" id="9_1"></div>
+        <div class="square" id="9_2"></div>
+        <div class="square" id="9_3"></div>
+        <div class="square" id="9_4"></div>
+        <div class="square" id="9_5"></div>
+        <div class="square" id="9_6"></div>
+        <div class="square" id="9_7"></div>
+        <div class="square" id="9_8"></div>
+        <div class="square" id="9_9"></div>
+      </div>
+    </div>
+    <div onclick="play()" id="playGame">Play</div>
+    <script src="hamiltonian.js"></script>
+    <footer>
+      <p id="copywrite">Copyright © 2022 Kalen Shamy - All Rights Reserved.</p>
+    </footer>
+  </body>
+</html>
