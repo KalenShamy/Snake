@@ -99,7 +99,7 @@ function step() {
     gameRun = false;
     document.getElementById("gameOver").style.visibility = "visible";
     document.getElementById("snakeLength").innerText = "Length: " + snake.length;
-    document.getElementById("skill").innerText = "Skill: " + Math.round((snake.length/moves)*1000*(snake.length/100)*100)/100 + "%";
+    document.getElementById("skill").innerText = "Skill: " + Math.round((snake.length/moves)*1000*((snake.length-3)/97)*100)/100 + "%";
   } else {
     if (ateApple) {
       var length = snake.length
