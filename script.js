@@ -4,11 +4,12 @@ var apple = [0,0];
 var snake = [[3,4],[2,4],[1,4]];
 var direction = "Right";
 
+var moves = 0;
+
 var nextMove = "";
 var gameRun = true;
 
 var ateApple = false;
-var score = 0;
 
 function randomNumber(min, max) {
     return Math.round(Math.random()*(max-min)+min)
@@ -87,6 +88,7 @@ function drawSnake() {
 }
 
 function step() {
+  moves += 1;
   var temp = [snake[0][0], snake[0][1]];
   if (direction == "Up") snake[0][1] -= 1;
   else if (direction == "Left") snake[0][0] -= 1;
@@ -97,7 +99,7 @@ function step() {
     gameRun = false;
     document.getElementById("gameOver").style.visibility = "visible";
     document.getElementById("snakeLength").innerText = "Length: " + snake.length;
-    document.getElementById("score").innerText = "Score: " + score;
+    document.getElementById("skill").innerText = "Skill: " + Math.round((snake.length/moves)*1000*(snake.length/100)*100)/100 + "%";
   } else {
     if (ateApple) {
       var length = snake.length
@@ -121,7 +123,6 @@ function step() {
     if (appleInSnake()) {
       newApple();
       ateApple = true;
-      score += 1;
     }
     if (nextMove != "") {
       direction = nextMove;
