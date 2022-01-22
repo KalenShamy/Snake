@@ -129,8 +129,11 @@ function step() {
 
   for (var i = 0; i < hamiltonianCycle.length; i++) {
     var square = hamiltonianCycle[i];
+    var lastSquare;
+    if (i == 0) lastSquare = hamiltonianCycle[hamiltonianCycle.length-1];
+    else lastSquare = hamiltonianCycle[i-1];
     if (isNextSquare == true) {
-      if (square[1] == 9 && square[0]%2==0 && square[0] > 1 && apple[0] != square[0]-1 && apple[0] != square[0] && !squareInSnake([square[0]-1,9])) {
+      if (square[1] == 9 && square[0]%2==0 && square[0] > 1 && (apple[1] == 0 || (apple[0] != square[0]-1 && apple[0] != square[0])) && !squareInSnake([square[0]-1,9])) {
         isNextSquare = false;
         if (ateApple) {
           snake.pop();
@@ -148,6 +151,23 @@ function step() {
           snake.reverse();
         }
         break;
+      } else if (square[0]%2==0 && square[0] > 0 && square[1] != 0 && apple[1] == lastSquare[1] && !squareInSnake([square[0]-1,square[1]]) && snake.length < 50) {
+        isNextSquare = false;
+        if (ateApple) {
+          snake.pop();
+          snake.reverse();
+          snake[snake.length] = [lastSquare[0],lastSquare[1]];
+          snake[snake.length] = [lastSquare[0]-1,lastSquare[1]];
+          snake.reverse();
+          newApple();
+        } else {
+          snake.pop();
+          snake.pop();
+          snake.reverse();
+          snake[snake.length] = [lastSquare[0],lastSquare[1]];
+          snake[snake.length] = [lastSquare[0]-1,lastSquare[1]];
+          snake.reverse();
+        }
       } else {
         isNextSquare = false;
         if (ateApple) {
