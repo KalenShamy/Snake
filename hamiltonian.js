@@ -34,7 +34,7 @@ function lean(percent) { // pity points to noobs & buzzoff to pros
 }
 
 function skill(moves, length) { // needs improvement butttttt its fiiiiiiinnneeeeeee
-  return Math.round(lean(((length/moves)*1000*((length-3)/97))/100)*100*100)/100;
+  return Math.round(lean((2*length/moves*1000)/100)*100*((length-3)/97)*100)/100;
 }
 
 function updateChecker() {
