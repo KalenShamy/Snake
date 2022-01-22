@@ -122,6 +122,8 @@ function drawSnake() {
   }
 }
 
+var lastMove = "";
+
 function step() {
   moves += 1;
 
@@ -148,6 +150,8 @@ function step() {
       else lastSquare = hamiltonianCycle[i-1];
       if (isNextSquare == true) {
         if (square[1] == 9 && square[0]%2==0 && square[0] > 1 && (apple[1] == 0 || (apple[0] != square[0]-1 && apple[0] != square[0])) && !squareInSnake([square[0]-1,9])) {
+          // skip column
+          lastMove = "skip column";
           isNextSquare = false;
           if (ateApple) {
             snake.reverse();
@@ -163,6 +167,8 @@ function step() {
           nextStep = [square[0]-1,9];
           break;
         } else if (square[0]%2==0 && square[0] > 0 && square[1] != 0 && apple[1] == lastSquare[1] && !squareInSnake([square[0]-1,square[1]]) && snake.length < 50) {
+          // dont finish column
+          lastMove = "dont finish column";
           isNextSquare = false;
           if (ateApple) {
             snake.reverse();
@@ -175,6 +181,8 @@ function step() {
             snake.reverse();
           }
         } else {
+          // follow hamiltonian cycle
+          lastMove = "follow hamiltonian cycle";
           isNextSquare = false;
           if (ateApple) {
             snake.reverse();
@@ -194,6 +202,8 @@ function step() {
         isNextSquare = true;
       }
       if (isNextSquare == true && i == 99) {
+        // follow hamiltonian cycle (wrap to beginning)
+        lastMove = "follow hamiltonian cycle (wrap to beginning)";
         if (ateApple) {
           snake.reverse();
           snake[snake.length] = hamiltonianCycle[0];
@@ -216,6 +226,7 @@ function step() {
     document.getElementById("gameOver").style.visibility = "visible";
     document.getElementById("snakeLength").innerText = "Length: " + snake.length;
     document.getElementById("skill").innerText = "Skill: " + skill(moves, snake.length) + "%";
+    if (snake.length != 100) console.log("Details on game loss:" + "\n\n" + "Ate Apple: " + ateApple + "\n" + "Last Move: " + lastMove);
   } else {
     ateApple = false;
     if (appleInSnake()) {
