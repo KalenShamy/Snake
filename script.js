@@ -15,6 +15,14 @@ function randomNumber(min, max) {
     return Math.round(Math.random()*(max-min)+min)
 }
 
+function lean(percent) { // pity points to noobs & buzzoff to pros
+  return 1/(1+Math.pow(Math.E, -5*(percent) + 2));
+}
+
+function skill(moves, length) { // needs improvement butttttt its fiiiiiiinnneeeeeee
+  return Math.round(lean(((length/moves)*1000*((length-3)/97))/100)*100*100)/100;
+}
+
 function updateChecker() {
   for (var i = 0; i < document.getElementsByClassName("square").length; i++) {
     if ((i + Math.floor(i/10))%2 == 0) document.getElementsByClassName("square")[i].style.background = "rgb(20,20,20)";
@@ -30,10 +38,13 @@ function appleInSnake() {
   return inSnake;
 }
 
-function snakeOnBoard() {
+function snakeOnBoard(ateApple) {
   var snakeInSnake = false;
   if (snake[0][0] < 0 || snake[0][0] > 9 || snake[0][1] < 0 || snake[0][1] > 9) return false;
-  for (var i = 1; i < snake.length; i++) {
+  var snakeLength; // yay now snake doesnt die if sniffing its tail
+  if (ateApple) snakeLength = snake.length; // ^^
+  else snakeLength = snake.length-1; // ^^
+  for (var i = 1; i < snakeLength; i++) {
     if (snake[i][0] == snake[0][0] && snake[i][1] == snake[0][1]) snakeInSnake = true;
   }
   return !snakeInSnake;
@@ -83,7 +94,9 @@ function drawSnake() {
   document.getElementById(apple[0] + "_" + apple[1]).style.background = "red";
   for (var i = 0; i < snake.length; i++) {
     var pos = snake[i];
-    document.getElementById(pos[0] + "_" + pos[1]).style.background = "green";
+    if (i == snake.length-1) document.getElementById(pos[0] + "_" + pos[1]).style.background = "rgb(0,75,0)";
+    else if (i == 0) document.getElementById(pos[0] + "_" + pos[1]).style.background = "rgb(0,175,0)";
+    else document.getElementById(pos[0] + "_" + pos[1]).style.background = "green";
   }
 }
 
@@ -95,11 +108,11 @@ function step() {
   else if (direction == "Right") snake[0][0] += 1;
   else if (direction == "Down") snake[0][1] += 1;
 
-  if (!snakeOnBoard()) {
+  if (!snakeOnBoard(ateApple)) {
     gameRun = false;
     document.getElementById("gameOver").style.visibility = "visible";
     document.getElementById("snakeLength").innerText = "Length: " + snake.length;
-    document.getElementById("skill").innerText = "Skill: " + Math.round((snake.length/moves)*1000*((snake.length-3)/97)*100)/100 + "%";
+    document.getElementById("skill").innerText = "Skill: " + skill(moves, snake.length) + "%";
   } else {
     if (ateApple) {
       var length = snake.length
@@ -137,7 +150,7 @@ window.onresize = (event) => {
 
 function keypress(event) {
   if (event.defaultPrevented || (gameRun == false && event.key != "r" && event.key != "R")) {
-    return; // Do nothing if the event was already processed
+    return;
   }
   switch (event.key) {
     case "ArrowUp":
@@ -190,10 +203,9 @@ function keypress(event) {
       break;
     case "r":
     case "R":
-      window.location = "https://kalenshamy.github.io/Snake/";
+      window.location = window.location.toString();
   }
 
-  // Cancel the default action to avoid it being handled twice
   event.preventDefault();
 }
 

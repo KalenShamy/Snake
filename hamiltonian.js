@@ -6,7 +6,7 @@ var direction = "Right";
 
 var moves = 0;
 
-var hamiltonianCycle = [
+var hamiltonianCycle = [ // haha didnt wanna write a function to find it so i did it myself :)
   [0,0],[1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[7,0],[8,0],[9,0],
   [9,1],[9,2],[9,3],[9,4],[9,5],[9,6],[9,7],[9,8],[9,9],
   [8,9],[8,8],[8,7],[8,6],[8,5],[8,4],[8,3],[8,2],[8,1],
@@ -29,6 +29,14 @@ function randomNumber(min, max) {
     return Math.round(Math.random()*(max-min)+min)
 }
 
+function lean(percent) { // pity points to noobs & buzzoff to pros
+  return 1/(1+Math.pow(Math.E, -5*(percent) + 2));
+}
+
+function skill(moves, length) { // needs improvement butttttt its fiiiiiiinnneeeeeee
+  return Math.round(lean(((length/moves)*1000*((length-3)/97))/100)*100*100)/100;
+}
+
 function updateChecker() {
   for (var i = 0; i < document.getElementsByClassName("square").length; i++) {
     if ((i + Math.floor(i/10))%2 == 0) document.getElementsByClassName("square")[i].style.background = "rgb(20,20,20)";
@@ -44,10 +52,21 @@ function appleInSnake() {
   return inSnake;
 }
 
-function snakeOnBoard() {
+function squareInSnake(square) {
+  var inSnake = false;
+  for (var i = 0; i < snake.length; i++) {
+    if (snake[i][0] == square[0] && snake[i][1] == square[1]) inSnake = true;
+  }
+  return inSnake;
+}
+
+function snakeOnBoard(ateApple) {
   var snakeInSnake = false;
   if (snake[0][0] < 0 || snake[0][0] > 9 || snake[0][1] < 0 || snake[0][1] > 9) return false;
-  for (var i = 1; i < snake.length; i++) {
+  var snakeLength; // yay now snake doesnt die if sniffing its tail
+  if (ateApple) snakeLength = snake.length; // ^^
+  else snakeLength = snake.length-1; // ^^
+  for (var i = 1; i < snakeLength; i++) {
     if (snake[i][0] == snake[0][0] && snake[i][1] == snake[0][1]) snakeInSnake = true;
   }
   return !snakeInSnake;
@@ -97,17 +116,21 @@ function drawSnake() {
   document.getElementById(apple[0] + "_" + apple[1]).style.background = "red";
   for (var i = 0; i < snake.length; i++) {
     var pos = snake[i];
-    document.getElementById(pos[0] + "_" + pos[1]).style.background = "green";
+    if (i == snake.length-1) document.getElementById(pos[0] + "_" + pos[1]).style.background = "rgb(0,75,0)";
+    else if (i == 0) document.getElementById(pos[0] + "_" + pos[1]).style.background = "rgb(0,175,0)";
+    else document.getElementById(pos[0] + "_" + pos[1]).style.background = "green";
   }
 }
 
 function step() {
   moves += 1;
+
   var isNextSquare = false;
+
   for (var i = 0; i < hamiltonianCycle.length; i++) {
     var square = hamiltonianCycle[i];
     if (isNextSquare == true) {
-      if (square[1] == 9 && square[0]%2==0 && square[0] > 2 && apple[0] < square[0]-1 && apple[0] < square[0] && snake.length < 50) {
+      if (square[1] == 9 && square[0]%2==0 && square[0] > 1 && apple[0] != square[0]-1 && apple[0] != square[0] && !squareInSnake([square[0]-1,9])) {
         isNextSquare = false;
         if (ateApple) {
           snake.pop();
@@ -116,7 +139,6 @@ function step() {
           snake[snake.length] = [square[0]-1,9];
           snake.reverse();
           newApple();
-          ateApple = false;
         } else {
           snake.pop();
           snake.pop();
@@ -133,7 +155,6 @@ function step() {
           snake[snake.length] = square;
           snake.reverse();
           newApple();
-          ateApple = false;
         } else {
           snake.pop();
           snake.reverse();
@@ -152,7 +173,6 @@ function step() {
         snake[snake.length] = hamiltonianCycle[0];
         snake.reverse();
         newApple();
-        ateApple = false;
       } else {
         snake.pop();
         snake.reverse();
@@ -164,12 +184,13 @@ function step() {
 
   drawSnake();
 
-  if (snake.length == 100) {
+  if (snake.length == 100 || !snakeOnBoard(ateApple)) {
     gameRun = false;
     document.getElementById("gameOver").style.visibility = "visible";
     document.getElementById("snakeLength").innerText = "Length: " + snake.length;
-    document.getElementById("skill").innerText = "Skill: " + Math.round((snake.length/moves)*1000*((snake.length-3)/97)*100)/100 + "%";
+    document.getElementById("skill").innerText = "Skill: " + skill(moves, snake.length) + "%";
   } else {
+    ateApple = false;
     if (appleInSnake()) {
       ateApple = true;
     }
