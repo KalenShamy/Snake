@@ -20,7 +20,7 @@ var hamiltonianCycle = [ // haha didnt wanna write a function to find it so i di
   [0,9],[0,8],[0,7],[0,6],[0,5],[0,4],[0,3],[0,2],[0,1],
 ];
 
-var nextMove = "";
+var nextStep = false;
 var gameRun = true;
 
 var ateApple = false;
@@ -125,79 +125,86 @@ function drawSnake() {
 function step() {
   moves += 1;
 
-  var isNextSquare = false;
+  if (nextStep != false) {
+    if (ateApple) {
+      snake.reverse();
+      snake[snake.length] = nextStep;
+      snake.reverse();
+      newApple();
+    } else {
+      snake.pop();
+      snake.reverse();
+      snake[snake.length] = nextStep;
+      snake.reverse();
+    }
+    nextStep = false;
+  } else {
+    var isNextSquare = false;
 
-  for (var i = 0; i < hamiltonianCycle.length; i++) {
-    var square = hamiltonianCycle[i];
-    var lastSquare;
-    if (i == 0) lastSquare = hamiltonianCycle[hamiltonianCycle.length-1];
-    else lastSquare = hamiltonianCycle[i-1];
-    if (isNextSquare == true) {
-      if (square[1] == 9 && square[0]%2==0 && square[0] > 1 && (apple[1] == 0 || (apple[0] != square[0]-1 && apple[0] != square[0])) && !squareInSnake([square[0]-1,9])) {
-        isNextSquare = false;
-        if (ateApple) {
-          snake.pop();
-          snake.reverse();
-          snake[snake.length] = [square[0],9];
-          snake[snake.length] = [square[0]-1,9];
-          snake.reverse();
-          newApple();
+    for (var i = 0; i < hamiltonianCycle.length; i++) {
+      var square = hamiltonianCycle[i];
+      var lastSquare;
+      if (i == 0) lastSquare = hamiltonianCycle[hamiltonianCycle.length-1];
+      else lastSquare = hamiltonianCycle[i-1];
+      if (isNextSquare == true) {
+        if (square[1] == 9 && square[0]%2==0 && square[0] > 1 && (apple[1] == 0 || (apple[0] != square[0]-1 && apple[0] != square[0])) && !squareInSnake([square[0]-1,9])) {
+          isNextSquare = false;
+          if (ateApple) {
+            snake.reverse();
+            snake[snake.length] = [square[0],9];
+            snake.reverse();
+            newApple();
+          } else {
+            snake.pop();
+            snake.reverse();
+            snake[snake.length] = [square[0],9];
+            snake.reverse();
+          }
+          nextStep = [square[0]-1,9];
+          break;
+        } else if (square[0]%2==0 && square[0] > 0 && square[1] != 0 && apple[1] == lastSquare[1] && !squareInSnake([square[0]-1,square[1]]) && snake.length < 50) {
+          isNextSquare = false;
+          if (ateApple) {
+            snake.reverse();
+            snake[snake.length] = [lastSquare[0]-1,lastSquare[1]];
+            snake.reverse();
+            newApple();
+          } else {
+            snake.reverse();
+            snake[snake.length] = [lastSquare[0]-1,lastSquare[1]];
+            snake.reverse();
+          }
         } else {
-          snake.pop();
-          snake.pop();
-          snake.reverse();
-          snake[snake.length] = [square[0],9];
-          snake[snake.length] = [square[0]-1,9];
-          snake.reverse();
+          isNextSquare = false;
+          if (ateApple) {
+            snake.reverse();
+            snake[snake.length] = square;
+            snake.reverse();
+            newApple();
+          } else {
+            snake.pop();
+            snake.reverse();
+            snake[snake.length] = square;
+            snake.reverse();
+          }
+          break;
         }
-        break;
-      } else if (square[0]%2==0 && square[0] > 0 && square[1] != 0 && apple[1] == lastSquare[1] && !squareInSnake([square[0]-1,square[1]]) && snake.length < 50) {
-        isNextSquare = false;
-        if (ateApple) {
-          snake.pop();
-          snake.reverse();
-          snake[snake.length] = [lastSquare[0],lastSquare[1]];
-          snake[snake.length] = [lastSquare[0]-1,lastSquare[1]];
-          snake.reverse();
-          newApple();
-        } else {
-          snake.pop();
-          snake.pop();
-          snake.reverse();
-          snake[snake.length] = [lastSquare[0],lastSquare[1]];
-          snake[snake.length] = [lastSquare[0]-1,lastSquare[1]];
-          snake.reverse();
-        }
-      } else {
-        isNextSquare = false;
-        if (ateApple) {
-          snake.reverse();
-          snake[snake.length] = square;
-          snake.reverse();
-          newApple();
-        } else {
-          snake.pop();
-          snake.reverse();
-          snake[snake.length] = square;
-          snake.reverse();
-        }
-        break;
       }
-    }
-    if (square[0] == snake[0][0] && square[1] == snake[0][1]) {
-      isNextSquare = true;
-    }
-    if (isNextSquare == true && i == 99) {
-      if (ateApple) {
-        snake.reverse();
-        snake[snake.length] = hamiltonianCycle[0];
-        snake.reverse();
-        newApple();
-      } else {
-        snake.pop();
-        snake.reverse();
-        snake[snake.length] = hamiltonianCycle[0];
-        snake.reverse();
+      if (square[0] == snake[0][0] && square[1] == snake[0][1]) {
+        isNextSquare = true;
+      }
+      if (isNextSquare == true && i == 99) {
+        if (ateApple) {
+          snake.reverse();
+          snake[snake.length] = hamiltonianCycle[0];
+          snake.reverse();
+          newApple();
+        } else {
+          snake.pop();
+          snake.reverse();
+          snake[snake.length] = hamiltonianCycle[0];
+          snake.reverse();
+        }
       }
     }
   }
@@ -213,10 +220,6 @@ function step() {
     ateApple = false;
     if (appleInSnake()) {
       ateApple = true;
-    }
-    if (nextMove != "") {
-      direction = nextMove;
-      nextMove = "";
     }
   }
 }
