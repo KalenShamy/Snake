@@ -170,10 +170,12 @@ function step() {
           movedInStep = true;
           isNextSquare = false;
           if (ateApple) {
-            snake.reverse();
-            snake[snake.length] = [lastSquare[0]-1,lastSquare[1]];
-            snake.reverse();
             newApple();
+            if (apple[0] != square[0]) {
+              snake.reverse();
+              snake[snake.length] = [lastSquare[0]-1,lastSquare[1]];
+              snake.reverse();
+            }
           } else {
             snake.reverse();
             snake[snake.length] = [lastSquare[0]-1,lastSquare[1]];
