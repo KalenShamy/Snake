@@ -32,7 +32,7 @@ function lean(percent) { // pity points to noobs & buzzoff to pros
   return 1/(1+Math.pow(Math.E, -5*(percent) + 2));
 }
 
-function skill(moves, length) { // needs improvement butttttt its fiiiiiiinnneeeeeee
+function skill(moves, length) {
   return Math.round(lean((2*length/moves*1000)/100)*100*((length-3)/97)*100)/100;
 }
 
