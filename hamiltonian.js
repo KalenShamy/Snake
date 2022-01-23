@@ -149,6 +149,7 @@ function step() {
       else lastSquare = hamiltonianCycle[i-1];
       if (isNextSquare == true) {
         if (square[1] == 9 && square[0]%2==0 && square[0] > 1 && (apple[1] == 0 || (apple[0] != square[0]-1 && apple[0] != square[0])) && !squareInSnake([square[0]-1,9]) && movedInStep == false) {
+          // skip column
           movedInStep = true;
           isNextSquare = false;
           if (ateApple) {
@@ -165,6 +166,7 @@ function step() {
           nextStep = [square[0]-1,9];
           break;
         } else if (square[0]%2==0 && square[0] > 0 && square[1] != 0 && apple[1] == lastSquare[1] && !squareInSnake([square[0]-1,square[1]+1]) && snake.length < 50 && movedInStep == false) {
+          // dont finish column
           movedInStep = true;
           isNextSquare = false;
           if (ateApple) {
@@ -178,6 +180,7 @@ function step() {
             snake.reverse();
           }
         } else if (movedInStep == false) {
+          // follow hamiltonian cycle
           movedInStep = true;
           isNextSquare = false;
           if (ateApple) {
@@ -198,6 +201,7 @@ function step() {
         isNextSquare = true;
       }
       if (isNextSquare == true && i == 99 && movedInStep == false) {
+        // follow hamiltonian cycle (wrap to beginning)
         if (ateApple) {
           snake.reverse();
           snake[snake.length] = hamiltonianCycle[0];
