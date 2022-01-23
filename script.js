@@ -231,7 +231,7 @@ function sleep(milliseconds) {
 async function play() {
   while (gameRun) {
     document.getElementById("playGame").style.display = "none";
-    await sleep(300);
+    await sleep(250);
     step();
   }
 }
