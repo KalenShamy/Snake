@@ -171,11 +171,11 @@ function step() {
           isNextSquare = false;
           if (ateApple) {
             newApple();
-            if (apple[0] != square[0]) {
+            if (!(apple[0] > 0 && apple[1] > 0 && (apple[0] == square[0] || apple[0] == square[0]-1) && apple[1] <= square[1])) {
               snake.reverse();
               snake[snake.length] = [lastSquare[0]-1,lastSquare[1]];
               snake.reverse();
-            }
+            } else console.log(moves, apple, square);
           } else {
             snake.reverse();
             snake[snake.length] = [lastSquare[0]-1,lastSquare[1]];
