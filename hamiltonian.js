@@ -2,7 +2,6 @@
 
 var apple = [0,0];
 var snake = [[2,0],[1,0],[0,0]];
-var direction = "Right";
 
 var moves = 0;
 
@@ -108,7 +107,6 @@ function newApple() {
   while (appleInSnake()) {
     apple = [randomNumber(0,9), randomNumber(0,9)];
   }
-  document.getElementById(apple[0] + "_" + apple[1]).style.background = "red";
 }
 
 function drawSnake() {
@@ -126,6 +124,7 @@ var lastMove = "";
 
 function step() {
   moves += 1;
+  var movedInStep = false;
 
   if (nextStep != false) {
     if (ateApple) {
@@ -149,9 +148,8 @@ function step() {
       if (i == 0) lastSquare = hamiltonianCycle[hamiltonianCycle.length-1];
       else lastSquare = hamiltonianCycle[i-1];
       if (isNextSquare == true) {
-        if (square[1] == 9 && square[0]%2==0 && square[0] > 1 && (apple[1] == 0 || (apple[0] != square[0]-1 && apple[0] != square[0])) && !squareInSnake([square[0]-1,9])) {
-          // skip column
-          lastMove = "skip column";
+        if (square[1] == 9 && square[0]%2==0 && square[0] > 1 && (apple[1] == 0 || (apple[0] != square[0]-1 && apple[0] != square[0])) && !squareInSnake([square[0]-1,9]) && movedInStep == false) {
+          movedInStep = true;
           isNextSquare = false;
           if (ateApple) {
             snake.reverse();
@@ -166,9 +164,8 @@ function step() {
           }
           nextStep = [square[0]-1,9];
           break;
-        } else if (square[0]%2==0 && square[0] > 0 && square[1] != 0 && apple[1] == lastSquare[1] && !squareInSnake([square[0]-1,square[1]]) && snake.length < 50) {
-          // dont finish column
-          lastMove = "dont finish column";
+        } else if (square[0]%2==0 && square[0] > 0 && square[1] != 0 && apple[1] == lastSquare[1] && !squareInSnake([square[0]-1,square[1]+1]) && snake.length < 50 && movedInStep == false) {
+          movedInStep = true;
           isNextSquare = false;
           if (ateApple) {
             snake.reverse();
@@ -180,9 +177,8 @@ function step() {
             snake[snake.length] = [lastSquare[0]-1,lastSquare[1]];
             snake.reverse();
           }
-        } else {
-          // follow hamiltonian cycle
-          lastMove = "follow hamiltonian cycle";
+        } else if (movedInStep == false) {
+          movedInStep = true;
           isNextSquare = false;
           if (ateApple) {
             snake.reverse();
@@ -201,9 +197,7 @@ function step() {
       if (square[0] == snake[0][0] && square[1] == snake[0][1]) {
         isNextSquare = true;
       }
-      if (isNextSquare == true && i == 99) {
-        // follow hamiltonian cycle (wrap to beginning)
-        lastMove = "follow hamiltonian cycle (wrap to beginning)";
+      if (isNextSquare == true && i == 99 && movedInStep == false) {
         if (ateApple) {
           snake.reverse();
           snake[snake.length] = hamiltonianCycle[0];
@@ -226,11 +220,11 @@ function step() {
     document.getElementById("gameOver").style.visibility = "visible";
     document.getElementById("snakeLength").innerText = "Length: " + snake.length;
     document.getElementById("skill").innerText = "Skill: " + skill(moves, snake.length) + "%";
-    if (snake.length != 100) console.log("Details on game loss:" + "\n\n" + "Ate Apple: " + ateApple + "\n" + "Last Move: " + lastMove);
   } else {
-    ateApple = false;
     if (appleInSnake()) {
-      ateApple = true;
+      ateApple = appleInSnake();
+    } else {
+      ateApple = false;
     }
   }
 }
