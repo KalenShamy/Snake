@@ -175,7 +175,7 @@ function step() {
               snake.reverse();
               snake[snake.length] = [lastSquare[0]-1,lastSquare[1]];
               snake.reverse();
-            } else console.log(moves, apple, square);
+            }
           } else {
             snake.reverse();
             snake[snake.length] = [lastSquare[0]-1,lastSquare[1]];
