@@ -1,5 +1,5 @@
 # Snake
-Simple Desktop Snake Game
+Snake Game Inspired by Code Bullet
 
 ---
 
