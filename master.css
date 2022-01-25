@@ -22,7 +22,7 @@ h1 {
   background: rgb(25,25,25,0.5);
   position: absolute;
   left: 50%;
-  top: 5em;
+  top: 6.4em;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
