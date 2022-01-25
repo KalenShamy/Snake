@@ -6,6 +6,11 @@ body {
   text-align: center;
 }
 
+h1 {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
 #snake {
   background: black;
   margin: auto;
