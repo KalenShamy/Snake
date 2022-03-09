@@ -228,10 +228,13 @@ drawSnake();
 function sleep(milliseconds) {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
+
+var speed = 25;
+
 async function play() {
   while (gameRun) {
     document.getElementById("playGame").style.display = "none";
-    await sleep(250);
+    await sleep((-4.5*speed)+362.5);
     step();
   }
 }
