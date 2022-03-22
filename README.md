@@ -1,5 +1,5 @@
 # Snake
-Snake Game Inspired by Code Bullet
+Snake Game Inspired by Code Bullet on YouTube
 
 ---
 
