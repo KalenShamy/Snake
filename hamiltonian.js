@@ -30,9 +30,9 @@ var speed = 75;
 
 const params = new URL(location.href).searchParams;
 
-if (params.get("highscore")) highscore = ParseFloat(params.get("highscore"));
+if (params.get("highscore")) highscore = parseFloat(params.get("highscore"));
 if (params.get("reload")) reload = Boolean(params.get("reload"));
-if (params.get("speed")) speed = ParseInt(params.get("speed"));
+if (params.get("speed")) speed = parseInt(params.get("speed"));
 
 function randomNumber(min, max) {
     return Math.round(Math.random()*(max-min)+min)
