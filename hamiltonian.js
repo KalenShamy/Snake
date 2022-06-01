@@ -236,10 +236,11 @@ async function step() {
     document.getElementById("snakeLength").innerText = "Length: " + snake.length;
     document.getElementById("skill").innerText = "Skill: " + skill(moves, snake.length) + "%";
     if (highscore && highscore < skill(moves, snake.length)) highscore = skill(moves,snake.length);
+    else if (reload && !highscore) highscore = skill(moves,snake.length);
     if (highscore) document.getElementById("skill").innerText += "\n\nHighest Skill: " + highscore + "%";
     if (reload) {
       await sleep(1000);
-      window.location = window.location.href.split("?")[0] + "?" + (highscore && ("highscore=" + highscore + "&")) + "reload=true";
+      window.location = window.location.href.split("?")[0] + "?" + ((highscore && ("highscore=" + highscore + "&")) || "") + "reload=true";
     }
   } else {
     if (appleInSnake()) {
@@ -268,4 +269,8 @@ async function play() {
     await sleep((-4.5*speed)+362.5);
     step();
   }
+}
+
+window.onload = function() {
+  if (reload) play();
 }
