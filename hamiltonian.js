@@ -26,11 +26,13 @@ var ateApple = false;
 
 var highscore = null;
 var reload = false;
+var speed = 75;
 
 const params = new URL(location.href).searchParams;
 
 if (params.get("highscore")) highscore = params.get("highscore");
 if (params.get("reload")) reload = Boolean(params.get("reload"));
+if (params.get("speed")) speed = params.get("speed");
 
 function randomNumber(min, max) {
     return Math.round(Math.random()*(max-min)+min)
@@ -240,7 +242,7 @@ async function step() {
     if (highscore) document.getElementById("skill").innerText += "\n\nHighest Skill: " + highscore + "%";
     if (reload) {
       await sleep(1000);
-      window.location = window.location.href.split("?")[0] + "?" + ((highscore && ("highscore=" + highscore + "&")) || "") + "reload=true";
+      window.location = window.location.href.split("?")[0] + "?" + ((highscore && ("highscore=" + highscore + "&")) || "") + "reload=true" + (speed != 75 && "&speed=" + speed);
     }
   } else {
     if (appleInSnake()) {
@@ -260,8 +262,6 @@ drawSnake();
 function sleep(milliseconds) {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
-
-var speed = 75;
 
 async function play() {
   while (gameRun) {
