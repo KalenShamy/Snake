@@ -239,7 +239,7 @@ async function step() {
     if (highscore) document.getElementById("skill").innerText += "\n\nHighest Skill: " + highscore + "%";
     if (reload) {
       await sleep(1000);
-      window.location = window.location.split("?")[0] + "?" + (highscore && ("highscore=" + highscore + "&")) + "reload=true";
+      window.location = window.location.href.split("?")[0] + "?" + (highscore && ("highscore=" + highscore + "&")) + "reload=true";
     }
   } else {
     if (appleInSnake()) {
