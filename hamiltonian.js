@@ -24,6 +24,14 @@ var gameRun = true;
 
 var ateApple = false;
 
+var highscore = null;
+var reload = false;
+
+const params = new URL(location.href).searchParams;
+
+if (params.get("highscore") highscore = params.get("highscore");
+if (params.get("reload") highscore = Boolean(params.get("reload"));
+
 function randomNumber(min, max) {
     return Math.round(Math.random()*(max-min)+min)
 }
@@ -122,7 +130,7 @@ function drawSnake() {
 
 var lastMove = "";
 
-function step() {
+async function step() {
   moves += 1;
   var movedInStep = false;
 
@@ -222,10 +230,16 @@ function step() {
   drawSnake();
 
   if (snake.length == 100 || !snakeOnBoard(ateApple)) {
+    // gameover
     gameRun = false;
     document.getElementById("gameOver").style.visibility = "visible";
     document.getElementById("snakeLength").innerText = "Length: " + snake.length;
     document.getElementById("skill").innerText = "Skill: " + skill(moves, snake.length) + "%";
+    if (highscore) document.getElementById("skill").innerText += "\n\nHighest Skill: " + highscore + "%";
+    if (reload) {
+      await sleep(1000);
+      window.location = window.location.split("?")[0] + "?" + (highscore && ("highscore=" + highscore + "&")) + "reload=true";
+    }
   } else {
     if (appleInSnake()) {
       ateApple = appleInSnake();
