@@ -29,8 +29,8 @@ var reload = false;
 
 const params = new URL(location.href).searchParams;
 
-if (params.get("highscore") highscore = params.get("highscore");
-if (params.get("reload") highscore = Boolean(params.get("reload"));
+if (params.get("highscore")) highscore = params.get("highscore");
+if (params.get("reload")) highscore = Boolean(params.get("reload"));
 
 function randomNumber(min, max) {
     return Math.round(Math.random()*(max-min)+min)
